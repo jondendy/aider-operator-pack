@@ -1,0 +1,58 @@
+# Aider Operator Pack — Template Repo
+
+A ready-to-run **GitHub template repository** for disciplined, iterative AI-assisted coding using **Aider**.
+
+This repo gives you:
+- a repeatable *Plan → Act → Verify → Repeat* loop
+- project guardrails (`agent.md`)
+- a lightweight step engine (`prompt_plan.md`)
+- verification-first habits (tests, commands, and CI)
+- scripts to keep sessions small and token-efficient
+
+> Designed to work well with smaller / rate-limited models by keeping context and steps tight.
+
+---
+
+## Quick start
+
+1. **Create a new repo from this template** (or download the ZIP and push it).
+2. Put your project intent in **`spec.md`**.
+3. Break work into small steps in **`prompt_plan.md`**.
+4. Start Aider in your repo:
+
+```bash
+# Example: add only the files you plan to change
+# aider path/to/file.py path/to/test_file.py
+```
+
+5. For each step:
+- copy the next step into Aider
+- run tests (`make test` or your chosen command)
+- fix only failures
+- commit, then move to the next step
+
+---
+
+## Repo structure
+
+- `agent.md` — the rules you want Aider to follow
+- `spec.md` — what you are building + definition of done
+- `prompt_plan.md` — step-by-step plan (tiny, testable units)
+- `docs/WORKFLOW.md` — the full workflow (operator handbook)
+- `scripts/` — helper scripts for running steps and tests
+- `examples/` — minimal Python and Node examples (optional)
+- `.github/workflows/ci.yml` — basic CI that runs `make test` when present
+
+---
+
+## Recommended Aider habits
+
+- Add **only the files you expect to edit** to keep context small.
+- Always include **success criteria** (tests, sample inputs/outputs).
+- Run verification frequently; commit after each verified step.
+
+---
+
+## Licence
+
+MIT — see `LICENSE`.
