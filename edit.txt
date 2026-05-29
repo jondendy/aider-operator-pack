@@ -6,10 +6,6 @@ FILE: spec.md
 FILE: prompt_plan.md
 FILE: docs/WORKFLOW.md
 FILE: Makefile
-test:
-	./scripts/run_tests.sh
-
-
 FILE: .gitignore
 __pycache__/
 node_modules/
