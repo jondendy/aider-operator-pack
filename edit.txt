@@ -8,15 +8,7 @@ FILE: docs/WORKFLOW.md
 FILE: Makefile
 FILE: .gitignore
 FILE: scripts/run_tests.sh
-
-
-
 FILE: scripts/run_step.sh
-#!/usr/bin/env bash
-
-echo "Open prompt_plan.md and run next step in Aider"
-
-
 FILE: LICENSE
 MIT License
 
