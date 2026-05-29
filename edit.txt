@@ -1,0 +1,508 @@
+
+
+
+Skip to content
+Using Gmail with screen readers
+Conversations
+
+Important
+ 
+1–50 of 1,617
+ 
+
+Everything else
+ 
+1–50 of 10,802
+ 
+64% of 100 GB used
+Terms · Privacy · Programme Policies
+Last account activity: 3 minutes ago
+Details
+📁 aider-operator-pack-template (folder.txt format)
+
+FILE: README.md
+# Aider Operator Pack — Template Repo
+
+A ready-to-run GitHub template repository for disciplined, iterative AI-assisted coding using Aider.
+
+This repo gives you:
+- a repeatable Plan → Act → Verify → Repeat loop
+- project guardrails (agent.md)
+- a lightweight step engine (prompt_plan.md)
+- verification-first habits
+
+## Quick start
+
+1. Fill in spec.md
+2. Break steps into prompt_plan.md
+3. Use Aider step-by-step
+
+
+FILE: agent.md
+# agent.md — Aider guardrails
+
+You are a cautious coding assistant.
+
+Rules:
+- Make minimal changes
+- Do not refactor unrelated code
+- Always write/update tests
+- Fix only failing behaviour
+- Keep functions small and readable
+
+
+FILE: spec.md
+# spec.md
+
+## Goal
+(define your project)
+
+## Definition of Done
+- [ ] Core features work
+- [ ] Tests pass
+- [ ] README updated
+
+## Constraints
+- Language:
+- Dependencies:
+
+
+FILE: prompt_plan.md
+# prompt_plan.md
+
+## Rules
+- Steps must be small
+- Steps must be testable
+
+---
+
+## Step 1 — Skeleton
+Goal:
+Create base structure
+
+Task:
+Create minimal runnable app
+
+Success:
+Code runs without errors
+
+---
+
+## Step 2 — First feature
+Goal:
+Add first behaviour
+
+Task:
+Implement simple logic
+
+Success:
+Test passes
+
+
+FILE: docs/WORKFLOW.md
+# Workflow
+
+Loop:
+
+Plan → Act → Verify → Repeat
+
+1. Plan step
+2. Execute with Aider
+3. Run tests
+4. Fix failures
+5. Commit
+
+
+FILE: Makefile
+test:
+	./scripts/run_tests.sh
+
+
+FILE: .gitignore
+__pycache__/
+node_modules/
+.env
+*.log
+
+
+FILE: scripts/run_tests.sh
+#!/usr/bin/env bash
+
+echo "Running tests..."
+
+if command -v pytest >/dev/null; then
+    pytest
+elif command -v npm >/dev/null; then
+    npm test
+else
+    echo "No tests configured"
+fi
+
+
+FILE: scripts/run_step.sh
+#!/usr/bin/env bash
+
+echo "Open prompt_plan.md and run next step in Aider"
+
+
+FILE: LICENSE
+MIT License
+
+Copyright (c) 2026
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+FILE: .github/workflows/ci.yml
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make test
+	  
+FILE: example/test.js
+
+# Operator workflow (Aider)
+
+This repo is set up for disciplined AI-assisted development.
+
+## The loop
+**Plan → Act → Verify → Repeat**
+
+1. **Plan**: write or update `spec.md` and select the next step in `prompt_plan.md`.
+2. **Act**: start Aider with only the files you need; give one atomic instruction.
+3. **Verify**: run tests/lint/typecheck; treat failures as data.
+4. **Repeat**: fix only what failed; commit when green; move to the next step.
+
+## Session hygiene
+- Keep steps small to avoid context bloat.
+- Prefer restarting Aider between steps rather than one long chat.
+
+## Prompt templates
+
+### Execution (one step)
+```
+Implement the following step exactly:
+
+[PASTE STEP]
+
+Constraints:
+- Make minimal changes only
+- Do not refactor unrelated code
+- Keep functions small and simple
+
+Output:
+- Modify files directly
+- Do not explain unless necessary
+```
+
+### Debug / fix
+```
+The implementation failed the following tests:
+
+[PASTE ERROR OUTPUT]
+
+Fix only the failing behaviour.
+
+Constraints:
+- Do not rewrite working code
+- Keep changes minimal
+- Ensure all tests pass
+```
+
+## Verification gates
+- The strongest gate is a passing test suite.
+- Next best: typecheck + lint.
+- Weak: visual inspection.
+
+## Git discipline
+- Commit after every verified step.
+- Use small commits so rollbacks are easy.
+
+FILE __init__.py
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Running tests (best-effort)..."
+
+# Python (pytest)
+if [ -f pyproject.toml ] || [ -f requirements.txt ] || [ -d .venv ] || command -v python >/dev/null 2>&1; then
+  if command -v pytest >/dev/null 2>&1 && [ -d tests ]; then
+    echo "- pytest"
+    pytest -q
+    exit 0
+  fi
+fi
+
+# Node (npm test)
+if [ -f package.json ]; then
+  if command -v npm >/dev/null 2>&1; then
+    echo "- npm test"
+    npm test
+    exit 0
+  fi
+fi
+
+echo "No test runner detected."
+echo "Edit scripts/run_tests.sh and Makefile to match your project."
+exit 0
+
+FILE test/example.py
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+STEP_FILE="prompt_plan.md"
+
+if [ ! -f "$STEP_FILE" ]; then
+  echo "Missing $STEP_FILE"
+  exit 1
+fi
+
+echo "Open $STEP_FILE and copy the next step into Aider."
+echo "Tip: keep each step small and include success criteria."
+
+FILE ci.yml
+
+# Aider Operator Pack — Template Repo
+
+A ready-to-run **GitHub template repository** for disciplined, iterative AI-assisted coding using **Aider**.
+
+This repo gives you:
+- a repeatable *Plan → Act → Verify → Repeat* loop
+- project guardrails (`agent.md`)
+- a lightweight step engine (`prompt_plan.md`)
+- verification-first habits (tests, commands, and CI)
+- scripts to keep sessions small and token-efficient
+
+> Designed to work well with smaller / rate-limited models by keeping context and steps tight.
+
+---
+
+## Quick start
+
+1. **Create a new repo from this template** (or download the ZIP and push it).
+2. Put your project intent in **`spec.md`**.
+3. Break work into small steps in **`prompt_plan.md`**.
+4. Start Aider in your repo:
+
+```bash
+# Example: add only the files you plan to change
+# aider path/to/file.py path/to/test_file.py
+```
+
+5. For each step:
+- copy the next step into Aider
+- run tests (`make test` or your chosen command)
+- fix only failures
+- commit, then move to the next step
+
+---
+
+## Repo structure
+
+- `agent.md` — the rules you want Aider to follow
+- `spec.md` — what you are building + definition of done
+- `prompt_plan.md` — step-by-step plan (tiny, testable units)
+- `docs/WORKFLOW.md` — the full workflow (operator handbook)
+- `scripts/` — helper scripts for running steps and tests
+- `examples/` — minimal Python and Node examples (optional)
+- `.github/workflows/ci.yml` — basic CI that runs `make test` when present
+
+---
+
+## Recommended Aider habits
+
+- Add **only the files you expect to edit** to keep context small.
+- Always include **success criteria** (tests, sample inputs/outputs).
+- Run verification frequently; commit after each verified step.
+
+---
+
+## Licence
+
+MIT — see `LICENSE`.
+
+FILE: WORKFLOW.md
+
+# agent.md — Aider guardrails
+
+You are a cautious, test-first coding assistant working in this repository.
+
+## Non-negotiable rules
+- Make **minimal, targeted changes**.
+- Do **not** refactor unrelated code.
+- Prefer **small functions** and clear names.
+- **Write or update tests** for any behaviour change.
+- After edits, **run verification** (tests/lint/typecheck if available).
+- If tests fail, **fix only the failing behaviour**; do not rewrite working code.
+
+## Output discipline
+- Prefer small diffs.
+- Avoid adding new dependencies unless explicitly required.
+- If you must change a public interface, update docs and tests.
+
+## Safety
+- Never include secrets in code or docs.
+- If a task is ambiguous, propose one conservative option and proceed.
+
+FILE run_test.sh
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.coverage
+
+# Node
+node_modules/
+.npm/
+.pnpm-store/
+
+# Logs
+*.log
+
+# Secrets
+.env
+
+File: run_step.sh
+
+# prompt_plan.md
+
+## Rules
+- Each step must be **small** and **testable**.
+- Each step should touch **1–2 files**.
+- Each step must state **success criteria** (tests/examples).
+- No step should rely on future steps.
+
+---
+
+## Step 1 — Project skeleton
+Goal:
+- Create minimal runnable skeleton and basic test harness.
+
+Files:
+- (list files)
+
+Task:
+- (one precise instruction)
+
+Success criteria:
+- `make test` passes (or your test command)
+
+---
+
+## Step 2 — First behaviour
+Goal:
+- Implement first small user-visible behaviour.
+
+Files:
+- 
+
+Task:
+- 
+
+Success criteria:
+- Add tests for the behaviour and make them pass.
+
+---
+
+## Step 3 — Edge cases
+Goal:
+- Add validation and edge case coverage.
+
+Files:
+-
+
+Task:
+-
+
+Success criteria:
+- Tests include invalid/edge cases.
+
+FILE: README.md
+
+# spec.md
+
+## One-sentence goal
+(What are you building?)
+
+## Users / audience
+(Who uses it? In what environment?)
+
+## Definition of done
+- [ ] Core user journeys work
+- [ ] Tests cover key behaviours
+- [ ] Lint/type checks pass (if applicable)
+- [ ] README has setup + run instructions
+
+## Constraints
+- Language/runtime:
+- Dependencies:
+- Performance:
+- Security/privacy:
+
+## Non-goals
+(What are you explicitly not doing?)
+
+## Verification commands
+(These are the commands Aider should run)
+- Tests:
+- Lint:
+- Typecheck:
+
+File: download
+
+# Makefile
+
+.PHONY: help test lint typecheck
+
+help:
+	@echo "Targets: test lint typecheck"
+	@echo "Edit this Makefile to match your project."
+
+# Default test target: try common tools.
+# Prefer to replace with your project's actual command(s).
+
+test:
+	@./scripts/run_tests.sh
+
+lint:
+	@echo "No lint configured. Add a lint command here."
+
+typecheck:
+	@echo "No typecheck configured. Add a typecheck command here."
+	
+	
+Aid-4_Template.txt
+Displaying Aid-4_Template.txt.
