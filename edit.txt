@@ -3,21 +3,6 @@
 FILE: README.md
 FILE: agent.md
 FILE: spec.md
-# spec.md
-
-## Goal
-(define your project)
-
-## Definition of Done
-- [ ] Core features work
-- [ ] Tests pass
-- [ ] README updated
-
-## Constraints
-- Language:
-- Dependencies:
-
-
 FILE: prompt_plan.md
 # prompt_plan.md
 
