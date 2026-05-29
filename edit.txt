@@ -11,17 +11,6 @@ FILE: scripts/run_tests.sh
 FILE: scripts/run_step.sh
 FILE: LICENSE
 FILE: .github/workflows/ci.yml
-name: CI
-
-on: [push]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: make test
-	  
 FILE: example/test.js
 
 # Operator workflow (Aider)
